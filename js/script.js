@@ -65,7 +65,7 @@ class Calculator {
     }
     if (this.isEqualInvoked) {
       this.secondary = "";
-      this.primary = z;
+      this.primary = z.toString();
       this.isEqualInvoked = false;
     } else return z;
   }
