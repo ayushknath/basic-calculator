@@ -11,6 +11,7 @@ class Calculator {
   constructor() {
     this.primary = "";
     this.secondary = "";
+    this.operator = undefined;
     this.isEqualInvoked = false;
     this.allClear();
   }
@@ -21,8 +22,8 @@ class Calculator {
   }
 
   delete() {
-    if (this.primary === "" && this.secondary !== "") this.secondary = "";
-    this.primary = this.primary.toString().slice(0, -1);
+    if (this.primary === "") this.allClear();
+    else this.primary = this.primary.toString().slice(0, -1);
   }
 
   appendDigit(digit) {
@@ -38,20 +39,15 @@ class Calculator {
 
   operation(op) {
     if (this.primary === "") return;
-    else if (this.secondary === "") {
-      this.secondary =
-        parseFloat(this.primary).toString() + " " + op.toString();
-    } else {
-      this.secondary = `${this.compute()} ${op}`;
-    }
+    else if (this.secondary === "") this.secondary = parseFloat(this.primary).toString() + " " + op.toString();
+    else this.secondary = `${this.compute()} ${op}`;
     this.primary = "";
+    this.operator = op;
   }
 
   compute() {
-    let x = parseFloat(this.secondary);
-    let y = parseFloat(this.primary);
-    let z = 0;
-    switch (this.secondary.split(" ")[1]) {
+    let x = parseFloat(this.secondary), y = parseFloat(this.primary), z = 0;
+    switch (this.operator) {
       case "+":
         z = x + y;
         break;
